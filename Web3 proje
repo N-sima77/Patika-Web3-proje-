@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <locale.h>
+
+int main() {
+    setlocale(LC_ALL, "Turkish");
+
+    int dogru = 0;
+    int yanlis = 0;
+    int puan = 0;
+    int tahmin;
+    char input[100];  // Use a different variable for the input to avoid conflicts
+
+    srand(time(NULL)); // Initialize the random number generator outside the loop
+
+    while (1) {
+        int sayi1 = rand() % 1000 + 1;
+        int sayi2 = rand() % 1000 + 1;
+        int toplam = sayi1 + sayi2;
+
+        printf("%d + %d işleminin sonucu kaçtır? \n", sayi1, sayi2);
+        scanf("%d", &tahmin); // Use scanf instead of scanf_s for compatibility
+
+        if (tahmin == toplam) {
+            printf("Doğru\n");
+            dogru++;
+            puan += 5;
+        } else {
+            printf("Yanlış\n");
+            yanlis++;
+            puan -= 2;
+        } 
+
+        printf("Devam etmek için herhangi bir tuşa basın, bitirmek için 'bitir' yazın: ");
+        scanf("%s", input); // Use the new input variable
+
+        if (strcmp(input, "bitir") == 0) {
+            printf("Oyun bitirildi.\n");
+            printf("Doğru cevaplar: %d\n", dogru);
+            printf("Yanlış cevaplar: %d\n", yanlis);
+            printf("Toplam puanınız: %d\n", puan);
+            break;
+        }
+    }
+
+    return 0;
+}
